@@ -11,7 +11,7 @@ export interface TaskProps {
     id: number;
     name: string;
     description: string;
-    limitDate: Date;
+    limitDate?: Date;
     column_id?: number;
 }
 
