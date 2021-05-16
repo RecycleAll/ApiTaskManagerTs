@@ -1,11 +1,9 @@
 import express from "express";
 import {ParticipeController} from "../controllers/participe.controller";
-import validator from "validator";
-import toBoolean = validator.toBoolean;
 
 const participeRouter = express.Router();
 
-participeRouter.post("/", async function (req, res){
+participeRouter.post("/", async function (req, res) {
     const {devId, projectId} = req.body;
     if (
         devId === undefined ||
@@ -22,7 +20,7 @@ participeRouter.post("/", async function (req, res){
         owner: false
     });
 
-    if (participe != null){
+    if (participe != null) {
         res.status(201);
         res.json(participe);
     } else {
@@ -30,11 +28,11 @@ participeRouter.post("/", async function (req, res){
     }
 });
 
-participeRouter.get("/", async function (req, res){
+participeRouter.get("/", async function (req, res) {
     const participeController = await ParticipeController.getInstance();
     const participes = await participeController!.getAll();
 
-    if (participes != null){
+    if (participes != null) {
         res.status(200);
         res.json(participes);
     } else {
@@ -42,7 +40,7 @@ participeRouter.get("/", async function (req, res){
     }
 });
 
-participeRouter.get("/:project_id/:dev_id", async function (req, res){
+participeRouter.get("/:project_id/:dev_id", async function (req, res) {
     const {dev_id, project_id} = req.params;
     const participeController = await ParticipeController.getInstance();
     const participe = await participeController.getOne(
@@ -50,7 +48,7 @@ participeRouter.get("/:project_id/:dev_id", async function (req, res){
         Number.parseInt(project_id)
     );
 
-    if (participe != null){
+    if (participe != null) {
         res.status(200);
         res.json(participe);
     } else {
@@ -58,7 +56,7 @@ participeRouter.get("/:project_id/:dev_id", async function (req, res){
     }
 });
 
-participeRouter.get("/:project_id", async function(req, res){
+participeRouter.get("/:project_id", async function (req, res) {
     const {project_id} = req.params;
     const participeController = await ParticipeController.getInstance();
     const participes = await participeController.getAllForOneProject(
@@ -73,11 +71,11 @@ participeRouter.get("/:project_id", async function(req, res){
     }
 });
 
-participeRouter.put("/", async function (req, res){
+participeRouter.put("/", async function (req, res) {
     const {id, devId, projectId, owner} = req.body;
-    if(
+    if (
         id === undefined
-    ){
+    ) {
         res.status(400).end();
         return;
     }
@@ -90,7 +88,7 @@ participeRouter.put("/", async function (req, res){
         owner
     });
 
-    if (participe != null){
+    if (participe != null) {
         res.status(200);
         res.json(participe);
     } else {
@@ -98,19 +96,17 @@ participeRouter.put("/", async function (req, res){
     }
 });
 
-participeRouter.delete("/", async function (req, res){
+participeRouter.delete("/:id", async function (req, res) {
     const {id} = req.params;
     const participeController = await ParticipeController.getInstance();
     const affectedRows = await participeController.delete(Number.parseInt(id));
 
-    if (affectedRows > 0){
+    if (affectedRows > 0) {
         res.status(200).end();
     } else {
         res.status(204).end();
     }
-})
-
-
+});
 
 export {
     participeRouter
