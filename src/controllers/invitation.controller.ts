@@ -88,31 +88,36 @@ export class InvitationController{
     }
 
     private async checkExisting(project_id?: number, from_dev_id?: number, to_dev_id?: number): Promise<boolean>{
-        const project = await this.Project.findOne({
-            where: {
-                id: project_id
+        if (project_id !== undefined){
+            const project = await this.Project.findOne({
+                where: {
+                    id: project_id
+                }
+            });
+            if (project == null) {
+                return false;
             }
-        });
-        if (project == null) {
-            return false;
+        }
+        if (from_dev_id != undefined){
+            const dev_from = await this.Dev.findOne({
+                where: {
+                    id: from_dev_id
+                }
+            });
+            if (dev_from == null){
+                return false;
+            }
         }
 
-        const dev_from = await this.Dev.findOne({
-            where: {
-                id: from_dev_id
+        if (to_dev_id !== undefined){
+            const dev_to = await this.Dev.findOne({
+                where: {
+                    id: to_dev_id
+                }
+            });
+            if (dev_to == null){
+                return false;
             }
-        });
-        if (dev_from == null){
-            return false;
-        }
-
-        const dev_to = await this.Dev.findOne({
-            where: {
-                id: to_dev_id
-            }
-        });
-        if (dev_to == null){
-            return false;
         }
 
         return true
