@@ -32,7 +32,7 @@ columnRouter.post("/", async function (req, res){
 columnRouter.get("/all/:projectId", async function(req, res){
     const {projectId} = req.params;
     const columnController = await ColumnController.getInstance();
-    const columns = columnController.getAll( Number.parseInt(projectId) );
+    const columns = await columnController.getAll( Number.parseInt(projectId) );
 
     if (columns != null) {
         res.status(200);
@@ -45,7 +45,7 @@ columnRouter.get("/all/:projectId", async function(req, res){
 columnRouter.get("/one/:id", async function(req, res){
     const {id} = req.params;
     const columnController = await ColumnController.getInstance();
-    const column = columnController.getOne( Number.parseInt(id) );
+    const column = await columnController.getOne( Number.parseInt(id) );
 
     if (column != null) {
         res.status(200);
@@ -63,7 +63,7 @@ columnRouter.put("/", async function(req, res){
     }
 
     const columnController = await ColumnController.getInstance();
-    const column = columnController.update({
+    const column = await columnController.update({
         id,
         name
     });

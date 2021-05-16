@@ -32,7 +32,7 @@ tagRouter.post("/", async function (req, res){
 tagRouter.get("/all/:projectId", async function(req, res){
     const {projectId} = req.params;
     const tagController = await TagController.getInstance();
-    const tags = tagController.getAll( Number.parseInt(projectId) );
+    const tags = await tagController.getAll( Number.parseInt(projectId) );
 
     if (tags != null) {
         res.status(200);
@@ -45,7 +45,7 @@ tagRouter.get("/all/:projectId", async function(req, res){
 tagRouter.get("/one/:id", async function(req, res){
     const {id} = req.params;
     const tagController = await TagController.getInstance();
-    const tag = tagController.getOne( Number.parseInt(id) );
+    const tag = await tagController.getOne( Number.parseInt(id) );
 
     if (tag != null) {
         res.status(200);
@@ -63,7 +63,7 @@ tagRouter.put("/", async function(req, res){
     }
 
     const tagController = await TagController.getInstance();
-    const tag = tagController.update({
+    const tag = await tagController.update({
         id,
         name
     });
