@@ -2,7 +2,7 @@ import {ModelCtor} from "sequelize";
 import {DevInstance} from "../models/dev.model";
 import {SessionInstance} from "../models/session.model";
 import {ProjectCreationProps, ProjectInstance, ProjectProps} from "../models/project.model";
-import {ParticipeInstance} from "../models/participe";
+import {ParticipeInstance} from "../models/participe.model";
 import {SequelizeManager} from "../models";
 
 export class ProjectController {
