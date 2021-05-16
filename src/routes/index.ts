@@ -7,6 +7,7 @@ import {taskRouter} from './task.route';
 import {tagTaskRouter} from './tagTask.route';
 import {devTaskRouter} from './devTask.route';
 import {participeRouter} from './participe.route';
+import {invitationRouter} from './invitation.route';
 
 export function buildRoutes(app: Express) {
     app.use("/auth", authRouter);
@@ -17,5 +18,5 @@ export function buildRoutes(app: Express) {
     app.use("/tagTask", tagTaskRouter);
     app.use("/devTask", devTaskRouter);
     app.use("/participe", participeRouter);
-
+    app.use("/invitation", invitationRouter);
 }
