@@ -4,11 +4,12 @@ import columnCreator, {ColumnInstance} from "./column.model";
 import taskCreator, {TaskInstance} from "./task.model";
 import devCreator, {DevInstance} from "./dev.model";
 import devTaskCreator, {DevTaskInstance} from "./devTask.model";
-import participeCreator, {ParticipeInstance} from './participe'
+import participeCreator, {ParticipeInstance} from './participe.model'
 import projectCreator, {ProjectInstance} from "./project.model";
 import tagCreator, {TagInstance} from "./tag.model";
 import tagTaskCreator, {TagTaskInstance} from "./tagTask.model";
 import sessionCreator, {SessionInstance} from "./session.model";
+import invitationCreator, {InvitationInstance} from './invitation.model';
 
 export interface SequelizeManagerProps {
     sequelize: Sequelize;
@@ -21,6 +22,7 @@ export interface SequelizeManagerProps {
     Participe: ModelCtor<ParticipeInstance>;
     TagTask: ModelCtor<TagTaskInstance>;
     Session: ModelCtor<SessionInstance>;
+    Invitation: ModelCtor<InvitationInstance>;
 }
 
 export class SequelizeManager implements SequelizeManagerProps {
@@ -35,6 +37,7 @@ export class SequelizeManager implements SequelizeManagerProps {
     Participe: ModelCtor<ParticipeInstance>;
     TagTask: ModelCtor<TagTaskInstance>;
     Session: ModelCtor<SessionInstance>;
+    Invitation: ModelCtor<InvitationInstance>;
 
     private static instance?: SequelizeManager
 
@@ -65,11 +68,12 @@ export class SequelizeManager implements SequelizeManagerProps {
             Participe: participeCreator(sequelize),
             TagTask: tagTaskCreator(sequelize),
             Session: sessionCreator(sequelize),
+            Invitation: invitationCreator(sequelize),
         };
 
         SequelizeManager.associate(managerProps);
         await sequelize.sync({
-            force: true //Permet de recréer toutes les tables
+            // force: true //Permet de recréer toutes les tables
         });
 
         return new SequelizeManager(managerProps);
@@ -167,6 +171,37 @@ export class SequelizeManager implements SequelizeManagerProps {
                 allowNull: true
             }
         });
+
+        //Invitation associations
+        props.Invitation.belongsTo(props.Project, {
+            foreignKey: "project_id"
+        });
+        props.Project.hasMany(props.Invitation, {
+            foreignKey: {
+                name: "project_id",
+                allowNull: true
+            }
+        });
+
+        props.Invitation.belongsTo(props.Dev, {
+            foreignKey: "from_dev_id"
+        });
+        props.Dev.hasMany(props.Invitation, {
+            foreignKey: {
+                name: "from_dev_id",
+                allowNull: true
+            }
+        });
+
+        props.Invitation.belongsTo(props.Dev, {
+            foreignKey: "to_dev_id"
+        });
+        props.Dev.hasMany(props.Invitation, {
+            foreignKey: {
+                name: "to_dev_id",
+                allowNull: true
+            }
+        });
     }
 
     private constructor(props: SequelizeManagerProps) {
@@ -180,5 +215,6 @@ export class SequelizeManager implements SequelizeManagerProps {
         this.Participe = props.Participe;
         this.TagTask = props.TagTask;
         this.Session = props.Session;
+        this.Invitation = props.Invitation;
     }
 }
