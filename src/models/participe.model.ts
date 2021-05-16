@@ -9,13 +9,12 @@ import {
 } from "sequelize";
 import {DevInstance} from "./dev.model";
 import {ProjectInstance} from "./project.model";
-import {DevTaskInstance} from "./devTask.model";
 
 export interface ParticipeProps {
     id: number;
     dev_id?: number;
     project_id?: number;
-    owner: boolean;
+    owner?: boolean;
 }
 
 export interface ParticipeCreationProps extends Optional<ParticipeProps, "id">{}
