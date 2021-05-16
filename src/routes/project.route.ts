@@ -32,7 +32,7 @@ projectRouter.post("/", async function (req, res){
 projectRouter.get("/all/:devId", async function(req, res){
     const {devId} = req.params;
     const projectController = await ProjectController.getInstance();
-    const projects = projectController.getAll( Number.parseInt(devId) );
+    const projects = await projectController.getAll( Number.parseInt(devId) );
 
     if (projects != null) {
         res.status(200);
@@ -63,7 +63,7 @@ projectRouter.put("/", async function(req, res){
     }
 
     const projectController = await ProjectController.getInstance();
-    const project = projectController.update({
+    const project = await projectController.update({
         id,
         name
     });
