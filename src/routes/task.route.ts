@@ -1,7 +1,6 @@
 import express from "express";
 import {parseDate} from "../utils/date.utils";
 import {TaskController} from "../controllers/task.controller";
-import {TaskProps} from "../models/task.model";
 
 const taskRouter = express.Router();
 
