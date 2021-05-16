@@ -45,7 +45,7 @@ projectRouter.get("/all/:devId", async function(req, res){
 projectRouter.get("/one/:id", async function(req, res){
     const {id} = req.params;
     const projectController = await ProjectController.getInstance();
-    const project = projectController.getOne( Number.parseInt(id) );
+    const project = await projectController.getOne( Number.parseInt(id) );
 
     if (project != null) {
         res.status(200);
