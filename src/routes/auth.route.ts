@@ -46,9 +46,8 @@ authRouter.post("/login", async function (req, res){
     const session = await authController.login(email, password);
 
     if (session !== null){
-        res.json({
-            token: session.token
-        });
+        res.status(201);
+        res.json(session);
     } else {
         res.status(404).end();
         return;
