@@ -3,6 +3,23 @@ import {ProjectController} from "../controllers/project.controller";
 
 const projectRouter = express.Router();
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Project:
+ *          type: object
+ *          required:
+ *              -name
+ *          properties:
+ *              id:
+ *                  type: string
+ *                  description: Auto-generated id
+ *              name:
+ *                  type: string
+ *                  description: Name of project
+ */
+
 projectRouter.post("/", async function (req, res){
     const {name, devId} = req.body;
 
