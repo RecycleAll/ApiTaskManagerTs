@@ -71,6 +71,21 @@ participeRouter.get("/:project_id", async function (req, res) {
     }
 });
 
+participeRouter.get("/dev/:dev_id", async function(req, res){
+    const {dev_id} = req.params;
+    const participeController = await ParticipeController.getInstance();
+    const participes = await participeController.getAllForOneDev(
+        Number.parseInt(dev_id)
+    );
+
+    if (participes != null){
+        res.status(200);
+        res.json(participes);
+    } else {
+        res.status(204).end();
+    }
+})
+
 participeRouter.put("/", async function (req, res) {
     const {id, devId, projectId, owner} = req.body;
     if (

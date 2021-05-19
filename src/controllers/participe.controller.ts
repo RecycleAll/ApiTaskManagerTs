@@ -71,6 +71,14 @@ export class ParticipeController{
         });
     }
 
+    public async getAllForOneDev(dev_id: number): Promise<ParticipeInstance[] | null>{
+        return this.Participe.findAll({
+            where: {
+                dev_id
+            }
+        });
+    }
+
     public async update(props: ParticipeProps): Promise<ParticipeInstance | null>{
         const dev = this.Dev.findOne({
             where: {
