@@ -71,7 +71,7 @@ participeRouter.get("/:project_id", async function (req, res) {
     }
 });
 
-participeRouter.get("/dev/:dev_id", async function(req, res){
+participeRouter.get("/getAll/dev/:dev_id", async function(req, res){
     const {dev_id} = req.params;
     const participeController = await ParticipeController.getInstance();
     const participes = await participeController.getAllForOneDev(
