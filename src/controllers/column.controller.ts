@@ -2,6 +2,8 @@ import {ModelCtor} from "sequelize";
 import {ColumnCreationProps, ColumnInstance, ColumnProps} from "../models/column.model";
 import {ProjectInstance} from "../models/project.model";
 import {SequelizeManager} from "../models";
+import {TaskInstance} from "../models/task.model";
+import {TaskController} from "./task.controller";
 
 export class ColumnController {
     Column: ModelCtor<ColumnInstance>;
@@ -76,6 +78,8 @@ export class ColumnController {
     public async delete(id: number): Promise<number> {
         const column = await ColumnController.instance.getOne(id);
         if (column != null){
+            const taskController = await TaskController.getInstance();
+            await taskController.deleteAll(id);
             return this.Column.destroy({
                 where: {
                     id

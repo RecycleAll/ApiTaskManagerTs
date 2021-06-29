@@ -52,6 +52,24 @@ export class TaskController{
         });
     }
 
+    public async deleteAll(column_id : number): Promise<number>{
+        const column = this.Column.findOne({
+            where: {
+                id: column_id
+            }
+        });
+
+        if (column == null){
+            return 0;
+        }
+
+        return this.Task.destroy({
+            where: {
+                column_id
+            }
+        });
+    }
+
     public async getOne(id: number): Promise<TaskInstance | null >{
         return this.Task.findOne({
             where: {

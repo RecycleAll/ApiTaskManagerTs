@@ -103,7 +103,19 @@ taskRouter.delete("/:id", async function (req, res){
     } else {
         res.status(204).end();
     }
-})
+});
+
+taskRouter.delete("/all/:columnId", async function (req, res){
+    const {columnId} = req.params;
+    const taskController = await TaskController.getInstance();
+    const affectedRows = await taskController.deleteAll( Number.parseInt(columnId) );
+
+    if (affectedRows > 0){
+        res.status(200).end();
+    } else {
+        res.status(204).end();
+    }
+});
 
 export {
     taskRouter
