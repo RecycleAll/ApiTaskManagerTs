@@ -19,6 +19,7 @@ taskRouter.post("/", async function(req, res){
     const limit = parseDate(limitDate);
     if(limit == null){
         res.status(400).end();
+        console.log("parse date failed");
         return;
     }
 
@@ -31,10 +32,10 @@ taskRouter.post("/", async function(req, res){
     });
 
     if (task != null) {
-        res.status(200);
+        res.status(201);
         res.json(task)
     } else {
-        res.status(4090).end();
+        res.status(409).end();
     }
 });
 
